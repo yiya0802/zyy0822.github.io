@@ -8,10 +8,10 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="Hexo"/>
+  <meta property="og:title" content="MYSQL"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Hexo"/>
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="article" />
   <meta property="og:image" content="http://example.com"/>
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">Hexo</p>
+          <p class="title">MYSQL</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -92,104 +92,45 @@
   </div>
 </header>
 
-<!-- Home Page Post List -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-10 col-md-10 col-md-offset-1">
-      
-        <div class="post-item-wrapper">
-  <a href="/2021/07/25/java%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="post-title">
-      java虚拟机
-  </a>
-  <div class="post-excerpt">
-    <!-- Post Date and Categories -->
-    <div class="date-and-category">
-      <div class="date">2021-07-25</div>
-      <div class="categories">
-        
-          Uncategorized
-        
-      </div>
-    </div>
-    <!-- Post Excerpt -->
-    <div class="excerpt typo">No Post Excerpt</div>
-    <!-- Post Tags -->
-    <div class="tags">
-      
-        <div class="untagged">Untagged</div>
-      
-    </div>
-  </div>
-</div>
-
-      
-        <div class="post-item-wrapper">
-  <a href="/2021/07/25/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="post-title">
-      MYSQL
-  </a>
-  <div class="post-excerpt">
-    <!-- Post Date and Categories -->
-    <div class="date-and-category">
-      <div class="date">2021-07-25</div>
-      <div class="categories">
-        
-          Uncategorized
-        
-      </div>
-    </div>
-    <!-- Post Excerpt -->
-    <div class="excerpt typo">No Post Excerpt</div>
-    <!-- Post Tags -->
-    <div class="tags">
-      
-        <div class="untagged">Untagged</div>
-      
-    </div>
-  </div>
-</div>
-
-      
-        <div class="post-item-wrapper">
-  <a href="/2021/07/25/hello-world/" class="post-title">
-      Hello World
-  </a>
-  <div class="post-excerpt">
-    <!-- Post Date and Categories -->
-    <div class="date-and-category">
-      <div class="date">2021-07-25</div>
-      <div class="categories">
-        
-          Uncategorized
-        
-      </div>
-    </div>
-    <!-- Post Excerpt -->
-    <div class="excerpt typo">No Post Excerpt</div>
-    <!-- Post Tags -->
-    <div class="tags">
-      
-        <div class="untagged">Untagged</div>
-      
-    </div>
-  </div>
-</div>
-
-      
-    </div>
-  </div>
-</div>
-
-<!-- Pagination -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-10 col-md-10 col-md-offset-1">
-      <ul class="pagination">
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
           
+            <!-- Author -->
+            <span class="author info">By John Doe</span>
           
-      </ul>
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-07-25</span>
+            <span class="time">21:33:23</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>1.MySQL<br>sql,DB,DBMS分别是什么<br>  DB:<br>       DateBase(数据库，一般以文件的形式存在)</p>
+<p>   DBMS:<br>        DateBase Management System(数据库管理系统 常见的有：Mysql DB2 Sybase sqlServer…)<br>    SQL：<br>        结构化查询语句，是一种标准通用语句<br>        sql属于高级语言。只要看得懂英语单词的，写出来的sql语句，可以读懂什么意思<br>        sql语句再执行的时候，内部会进行编译，再执行sql（sql的编译有DBMS完成）</p>
+<p>DBMS负责执行sql语句，通过执行sql语句来操作DB中的数据<br>DBMS -执行-&gt; sql -&gt;操作 -&gt;DB</p>
+<p>2.1什么是表？<br>表：table</p>
+<p>表示数据库的基本组成单元，所有的数据以表的形式组</p>
+<p>织，目的性是可读性强</p>
+<p>一个表包括行和列<br>行：被称为数据/记录（data）<br>列：被称为字段（column）<br>2.1什么是表？<br>表：table</p>
+<p>表示数据库的基本组成单元，所有的数据以表的形式组</p>
+<p>织，目的性是可读性强</p>
+<p>一个表包括行和列<br>      行：被称为数据/记录（data）<br>      列：被称为字段（column）</p>
+<p>2.2每个字段（列）包括哪些属性？<br>字段名，数据类型，相关的约束</p>
+<p>|学号（int）| 姓名（carchar） |年龄（int）<br>|110            |张三                      |20<br>|120            |李四                     |21<br>行叫数据，列叫字段</p>
+<p>3.学习MySQL主要还是学习通用的SQL语句<br>DQL（数据查询语言）:查询语句，凡是select都是DQL。<br>DML（数据操作语言）:insert delete update 对<em>数据</em>进行增删改。<br>DDL（数据定义语言）:<em><strong>creat</strong></em> drop alter ， 对表的<em>结构</em>进行增删改。<br>TCL（<strong>事务控制语言</strong>）:commit 提交事务，rollback 回滚事务。<br>DCL（数据控制语言）:grant授权，revoke撤销权限等。</p>
+
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</article>
 
 
 
