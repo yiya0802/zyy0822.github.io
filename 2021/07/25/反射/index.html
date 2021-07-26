@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="java反射基础"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Hexo"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://example.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Hexo</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">java反射基础</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a target="_blank" rel="noopener" href="https://github.com/zyy0822">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/674198412@qq.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By John Doe</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-07-25</span>
+            <span class="time">09:42:45</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>@<a href="java%E5%8F%8D%E5%B0%84">TOC</a></p>
+<h1 id="什么是反射？"><a href="#什么是反射？" class="headerlink" title="什么是反射？"></a>什么是反射？</h1><p>反射 (Reflection) 是 Java 的特征之一，它允许运行中的 Java 程序获取自身的信息，并且可以操作类或对象的内部属性。</p>
+<h2 id="反射的官方定义"><a href="#反射的官方定义" class="headerlink" title="反射的官方定义"></a>反射的官方定义</h2><blockquote>
+<p>Reflection enables Java code to discover information about the fields, methods and constructors of loaded classes, and to use reflected fields, methods, and constructors to operate on their underlying counterparts, within security restrictions.<br>The API accommodates applications that need access to either the public members of a target object (based on its runtime class) or the members declared by a given class. It also allows programs to suppress default reflective access control.</p>
+</blockquote>
+<p>简而言之，通过反射，我们可以在运行时获得程序或程序集中每一个类型的成员和成员的信息。程序中一般的对象的类型都是在编译期就确定下来的，而 Java 反射机制可以动态地创建对象并调用其属性，这样的对象的类型在编译期是未知的。所以我们可以通过反射机制直接创建对象，<strong>即使这个对象的类型在编译期是未知的。</strong></p>
+<p>反射的核心是 JVM 在<strong>运行</strong>时才动态加载类或调用方法/访问属性，它不需要事先（写代码的时候或编译期）知道运行对象是谁。</p>
+<p>Java 反射主要提供以下功能：<br>在运行时判断任意一个对象所属的类；<br>在运行时构造任意一个类的对象；<br>在运行时判断任意一个类所具有的成员变量和方法（通过反射甚至可以调用private方法）；<br>在运行时调用任意一个对象的方法</p>
+<h1 id="反射的用途"><a href="#反射的用途" class="headerlink" title="反射的用途"></a>反射的用途</h1><p>很多人都认为反射在实际的 Java 开发应用中并不广泛，其实不然。当我们在使用 IDE(如 Eclipse，IDEA)时，当我们输入一个对象或类并想调用它的属性或方法时，一按点号，编译器就会自动列出它的属性或方法，这里就会用到反射。<br><strong>反射最重要的用途就是开发各种通用框架</strong>。很多框架（比如 Spring）都是配置化的（比如通过 XML 文件配置 Bean），为了保证框架的通用性，它们可能需要根据配置文件加载不同的对象或类，调用不同的方法，这个时候就必须用到反射，运行时动态加载需要加载的对象。<br>举一个例子，在运用 Struts 2 框架的开发中我们一般会在 struts.xml 里去配置 Action，比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;action name=<span class="string">&quot;login&quot;</span></span><br><span class="line">               class=<span class="string">&quot;org.ScZyhSoft.test.action.SimpleLoginAction&quot;</span></span><br><span class="line">               method=<span class="string">&quot;execute&quot;</span>&gt;</span><br><span class="line">           &lt;result&gt;/shop/shop-index.jsp&lt;/result&gt;</span><br><span class="line">           &lt;result name=<span class="string">&quot;error&quot;</span>&gt;login.jsp&lt;/result&gt;</span><br><span class="line">       &lt;/action&gt;</span><br></pre></td></tr></table></figure>
+<p>配置文件与 Action 建立了一种映射关系，当 View 层发出请求时，请求会被 StrutsPrepareAndExecuteFilter 拦截，然后 StrutsPrepareAndExecuteFilter 会去动态地创建 Action 实例。比如我们请求 login.action，那么 StrutsPrepareAndExecuteFilter就会去解析struts.xml文件，检索action中name为login的Action，并根据class属性创建SimpleLoginAction实例，并用<strong>invoke方法</strong>来调用execute方法，这个过程离不开反射。<br>对与框架开发人员来说，反射虽小但作用非常大，它是各种容器实现的核心。而对于一般的开发者来说，不深入框架开发则用反射用的就会少一点，不过了解一下框架的底层机制有助于丰富自己的编程思想，也是很有益的。</p>
+<h2 id="反射的基本应用"><a href="#反射的基本应用" class="headerlink" title="反射的基本应用"></a>反射的基本应用</h2><p>上面我们提到了反射可以用于判断任意对象所属的类，获得 Class 对象，构造任意一个对象以及调用一个对象。这里我们介绍一下基本反射功能的使用和实现(反射相关的类一般都在 java.lang.relfect 包里)。</p>
+<h3 id="获得class对象"><a href="#获得class对象" class="headerlink" title="获得class对象"></a>获得class对象</h3><p>1.使用 Class 类的 forName 静态方法:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(driver);</span><br></pre></td></tr></table></figure>
+<p>2.直接获取某一个对象的 class，比如:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;?&gt; klass = int.class;</span><br><span class="line">Class&lt;?&gt; classInt = Integer.TYPE;</span><br></pre></td></tr></table></figure>
+<p>3.调用某个对象的 getClass() 方法，比如:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder str = new StringBuilder(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">Class&lt;?&gt; klass = str.getClass();</span><br></pre></td></tr></table></figure>
+<h3 id="判断是否为某个类的实例"><a href="#判断是否为某个类的实例" class="headerlink" title="判断是否为某个类的实例"></a>判断是否为某个类的实例</h3><p>一般地，我们用 instanceof 关键字来判断是否为某个类的实例。同时我们也可以借助反射中 Class 对象的 isInstance() 方法来判断是否为某个类的实例，它是一个 native 方法(Native Method就是一个java调用非java代码的接口。一个Native Method是这样一个java的方法：该方法的实现由非java语言实现，比如C)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native boolean isInstance(Object obj);</span><br></pre></td></tr></table></figure>
+<h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><p>1.使用Class对象的newInstance()方法来创建Class对象对应类的实例。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;?&gt; c = String.class;</span><br><span class="line">Object str = c.newInstance();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>2.先通过Class对象获取指定的Constructor对象，再调用Constructor对象的newInstance()方法来创建实例。这种方法可以用指定的构造器构造类的实例。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//获取String所对应的Class对象</span><br><span class="line">Class&lt;?&gt; c = String.class;</span><br><span class="line">//获取String类带一个String参数的构造器</span><br><span class="line">Constructor constructor = c.getConstructor(String.class);</span><br><span class="line">//根据构造器创建实例</span><br><span class="line">Object obj = constructor.newInstance(<span class="string">&quot;23333&quot;</span>);</span><br><span class="line">System.out.println(obj);</span><br></pre></td></tr></table></figure>
+<h3 id="获取class类的方法集合"><a href="#获取class类的方法集合" class="headerlink" title="获取class类的方法集合"></a>获取class类的方法集合</h3><p>1.getDeclaredMethods 方法返回类或接口声明的所有方法，包括公共、保护、默认（包）访问和私有方法，但不包括继承的方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">public Method[] getDeclaredMethods() throws SecurityException</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>2 .getMethods 方法返回某个类的所有公用（public）方法，包括其继承类的公用方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public Method[] getMethods() throws SecurityException</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3 .getMethod 方法返回一个特定的方法，其中第一个参数为方法名称，后面的参数为方法的参数对应Class的对象。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package org.ScZyhSoft.common;</span><br><span class="line">import java.lang.reflect.InvocationTargetException;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">public class test1 &#123;</span><br><span class="line">	public static void <span class="built_in">test</span>() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException &#123;</span><br><span class="line">	        Class&lt;?&gt; c = methodClass.class;</span><br><span class="line">	        Object object = c.newInstance();</span><br><span class="line">	        Method[] methods = c.getMethods();</span><br><span class="line">	        Method[] declaredMethods = c.getDeclaredMethods();</span><br><span class="line">	        //获取methodClass类的add方法</span><br><span class="line">	        Method method = c.getMethod(<span class="string">&quot;add&quot;</span>, int.class, int.class);</span><br><span class="line">	        //getMethods()方法获取的所有方法</span><br><span class="line">	        System.out.println(<span class="string">&quot;getMethods获取的方法：&quot;</span>);</span><br><span class="line">	        <span class="keyword">for</span>(Method m:methods)</span><br><span class="line">	            System.out.println(m);</span><br><span class="line">	        //getDeclaredMethods()方法获取的所有方法</span><br><span class="line">	        System.out.println(<span class="string">&quot;getDeclaredMethods获取的方法：&quot;</span>);</span><br><span class="line">	        <span class="keyword">for</span>(Method m:declaredMethods)</span><br><span class="line">	            System.out.println(m);</span><br><span class="line">	    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">class methodClass &#123;</span><br><span class="line">    public final int fuck = 3;</span><br><span class="line">    public int add(int a,int b) &#123;</span><br><span class="line">        <span class="built_in">return</span> a+b;</span><br><span class="line">    &#125;</span><br><span class="line">    public int sub(int a,int b) &#123;</span><br><span class="line">        <span class="built_in">return</span> a+b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行的结果如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">getMethods获取的方法：</span><br><span class="line">public int org.ScZyhSoft.common.methodClass.add(int,int)</span><br><span class="line">public int org.ScZyhSoft.common.methodClass.sub(int,int)</span><br><span class="line">public final void java.lang.Object.wait() throws java.lang.InterruptedException</span><br><span class="line">public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException</span><br><span class="line">public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException</span><br><span class="line">public boolean java.lang.Object.equals(java.lang.Object)</span><br><span class="line">public java.lang.String java.lang.Object.toString()</span><br><span class="line">public native int java.lang.Object.hashCode()</span><br><span class="line">public final native java.lang.Class java.lang.Object.getClass()</span><br><span class="line">public final native void java.lang.Object.notify()</span><br><span class="line">public final native void java.lang.Object.notifyAll()</span><br><span class="line">getDeclaredMethods获取的方法：</span><br><span class="line">public int org.ScZyhSoft.common.methodClass.add(int,int)</span><br><span class="line">public int org.ScZyhSoft.common.methodClass.sub(int,int)</span><br></pre></td></tr></table></figure>
+<h3 id="利用反射创建数组"><a href="#利用反射创建数组" class="headerlink" title="利用反射创建数组"></a>利用反射创建数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static void testArray() throws ClassNotFoundException &#123;</span><br><span class="line">        Class&lt;?&gt; cls = Class.forName(<span class="string">&quot;java.lang.String&quot;</span>);</span><br><span class="line">        Object array = Array.newInstance(cls,25);</span><br><span class="line">        //往数组里添加内容</span><br><span class="line">        Array.set(array,0,<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        Array.set(array,1,<span class="string">&quot;Java&quot;</span>);</span><br><span class="line">        Array.set(array,2,<span class="string">&quot;fuck&quot;</span>);</span><br><span class="line">        Array.set(array,3,<span class="string">&quot;Scala&quot;</span>);</span><br><span class="line">        Array.set(array,4,<span class="string">&quot;Clojure&quot;</span>);</span><br><span class="line">        //获取某一项的内容</span><br><span class="line">        System.out.println(Array.get(array,3));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其中的Array类为java.lang.reflect.Array类。我们通过Array.newInstance()创建数组对象，它的原型是:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static Object newInstance(Class&lt;?&gt; componentType, int length)</span><br><span class="line">        throws NegativeArraySizeException &#123;</span><br><span class="line">        <span class="built_in">return</span> newArray(componentType, length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>而 newArray 方法是一个 native 方法，它在 HotSpot JVM 里的具体实现我们后边再研究，这里先把源码贴出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private static native Object newArray(Class&lt;?&gt; componentType, int length)</span><br><span class="line">        throws NegativeArraySizeException;</span><br></pre></td></tr></table></figure>
+<h2 id="反射的注意事项"><a href="#反射的注意事项" class="headerlink" title="反射的注意事项"></a>反射的注意事项</h2><p>由于反射会额外消耗一定的系统资源，因此如果不需要动态地创建一个对象，那么就不需要用反射。<br>另外，反射调用方法时可以忽略权限检查，因此可能会破坏封装性而导致安全问题。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
+
