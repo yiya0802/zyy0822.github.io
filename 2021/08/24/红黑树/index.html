@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="钟逸">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="红黑树详细推导"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Zyy@0822"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://example.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Zyy@0822" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Zyy@0822</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-light.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">红黑树详细推导</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a target="_blank" rel="noopener" href="https://github.com/zyy0822">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:674198412@qq.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By 钟逸</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-08-24</span>
+            <span class="time">14:22:50</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>红黑树是一个平衡二叉树，但不是完美的平衡二叉树。虽然我们希望一个所有查找都能在~lgN次比较内结束，但是这样在动态插入中保持树的完美平衡代价太高，所以，我们稍微放松逛一下限制，希望找到一个能在对数时间内完成查找的数据结构。这个时候，红黑树站了出来。<br>阅读以下需要了解普通二叉树的插入以及删除操作。<br>红黑树是在普通二叉树上，对没个节点添加一个颜色属性形成的，同时整个红黑二叉树需要同时满足一下五条性质<br>红黑树需要满足的五条性质：<br><strong>节点是红或黑的</strong><br><strong>根节点是黑的</strong><br><strong>每个叶子节点（NIL或空节点）是黑的</strong><br><strong>每个红色节点间的两个子节点都是黑的</strong><br>也就是不存在相邻两个红色节点<br><strong>从根节点到每一个NIL节点的路径中，都包含了相同数量的黑色节点。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/95091a922b1e4cb9876ecafb8e3778eb.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkyMzIyMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>这五条性质约束了红黑树，可以通过数学证明来证明，满足这五条性质的二叉树可以将查找删除维持在对数时间内。<br>当我们进行插入或者删除操作时所作的一切操作都是为了调整树使之符合这五条性质。<br>下面我们先介绍两个基本操作，旋转。<br>旋转的目的是将节点多的一支出让节点给另一个节点少的一支，旋转操作在插入和删除操作中经常会用到，所以要熟记。<br>左旋：<br><img src="https://img-blog.csdn.net/20170323102309404?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvU3VuX1RUVFQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast#pic_center" alt="在这里插入图片描述"><br>右旋：<br><img src="https://img-blog.csdn.net/20170323102237896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvU3VuX1RUVFQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="下面讲讲插入了"><a href="#下面讲讲插入了" class="headerlink" title="下面讲讲插入了"></a>下面讲讲插入了</h2><p>因为要满足红黑树的这五条性质，如果我们插入的是黑色节点，那就违反了性质五，需要进行大规模调整，如果我们插入的是红色节点，那就只有在要插入节点的父节点也是红色的时候违反性质四或者是当插入的节点是根节点时，违反性质二，所以，我们把要插入的节点的颜色变成红色。</p>
+<p>下面是可能遇到的插入的几种状况：<br>1、当插入的节点是根节点时，直接涂黑即可；<br>2、当要插入的节点的父节点是红色的时候。<br>2.1这个时候分情况，如果插入的父亲节点是祖父节点的左节点<br>2.1.1这个时候再分情况，插入的父亲节点是红色且是祖父节点的左节点，且叔叔节点是黑的<br>2.1.1.1插入的父亲节点是红色且是祖父节点的左节点，且叔叔节点是黑的，且插入在父亲的左支<br>2.1.1.2插入的父亲节点是红色且是祖父节点的左节点，且叔叔节点是黑的，且插入在父亲的右支<br>2.1.2插入的父亲节点是红色且是祖父节点的左节点，且叔叔节点是红的<br>2.1.2.1插入的父亲节点是红色的且是祖父节点的左节点，且叔叔节点是红的，且插入在父亲的左支<br>2.1.2.2插入的父亲节点是红色的且是祖父节点的左节点，且叔叔节点是红的，且插入在父亲的右支<br>2.2 插入的父亲节点是祖父节点的右节点的时候<br>2.2.1插入的父亲节点是红色且是祖父节点的右节点，且叔叔节点是黑的<br>2.2.1.1插入的父亲节点是红色且是祖父节点的右节点，且叔叔节点是黑的，且插入在父亲的左支<br>2.2.1.2插入的父亲节点是红色且是祖父节点的右节点，且叔叔节点是黑的，且插入在父亲的右支<br>2.2.2插入的父亲节点是红色且是祖父节点的右节点，且叔叔节点是红的<br>2.2.2.1插入的父亲节点是红色且是祖父节点的右节点，且叔叔节点是红的，且插入在父亲的左支<br>2.2.2.2插入的父亲节点是红色且是祖父节点的右节点，且叔叔节点是红的，且插入在父亲的右支<br>下面讲具体情况<br>2.1.1.1：插入的父亲节点是红色且是祖父节点的左节点，且叔叔节点是黑的，且插入在父亲的左支<br><img src="https://img-blog.csdnimg.cn/4103791242d44059ae725551c11cd385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkyMzIyMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>此时不满足 相邻两节点不能同时为红色<br>我们可以通过对祖父节点进行右旋同时将祖父节点和父节点的颜色进行互换，这样就变成了：<br><img src="https://img-blog.csdnimg.cn/0b69d333a5cc4497bc604e7adabb8e70.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkyMzIyMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>2.1.1.2插入的父亲节点是红色且是祖父节点的左节点，且叔叔节点是黑的，且插入在父亲的右支</p>
+<p><img src="https://img-blog.csdnimg.cn/5bf836a86693489980e11d753bd6bd92.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkyMzIyMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>当要插入的节点是父节点的右支的时候，我们可以先对父节点进行左旋，变成如下：<br><img src="https://img-blog.csdnimg.cn/f858d77e72674277b0baa7f1aff8415e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkyMzIyMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>如果我们把原先的父节点看做是新的要插入的节点，把原先要插入的节点看做是新的父节点，那就变成了当要插入的节点在父节点的左支的情况，对，是的，就是按照当要插入的节点在父节点的左支的情况进行旋转，旋转完之后变成如下：<br><img src="https://img-blog.csdnimg.cn/6751a32dad304361951f4cb5127ea75e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkyMzIyMw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>剩下的情况其实都差不多可以按照这个退出来，我就不一个一个画出来了<br>最后：<br>红黑树的实现其实是一个2、3、4树，只是将双节点或者三节点用红色进行了标示，如果你将红色节点放到和它父元素相同的高度，并把它和父元素看做是一个元素，你就会发现，变成了一个高度为lgN的二叉树，这个2.3.4树对红黑树很有启发意义。<br>上面的步骤其实可以不用死记硬背，是可以推导出来的，因为我们是把一个平衡但通过插入或者删除破坏了平衡的红黑树再次平衡，同过旋转让位，改变红黑颜色，使之符合那五条基本性质。<br>旋转操作的目的是出让一个元素到另外的地方并且符合二叉树左小右大的性质，交换颜色的目的是为了保持红黑树的那五条性质。<br>要时刻记得 ，一切的操作都是为了保持那五条性质。</p>
+<p>最后的最后的最后，一定要尝试着自己推导一下插入删除规则啊，不然经常忘，是睡一觉起来再看就有点懵逼的那种忘。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!-- 雪花特效 -->
+<script type="text/javascript" src="\js\snow.js"></script>
+<!--人体时钟背景透明-->
+<script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<!--提供位置-->
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5q6u8egdiph&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
