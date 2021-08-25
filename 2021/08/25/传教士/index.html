@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="钟逸">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="别再用limit和offset了"/>
+  <meta property="og:title" content="传教士体位"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Zyy@0822"/>
   <meta property="og:type" content="article" />
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">别再用limit和offset了</p>
+          <p class="title">传教士体位</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -103,7 +103,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2021-08-24</span>
+            <span class="date">2021-08-25</span>
             <span class="time">10:02:21</span>
           </span>
           
@@ -112,24 +112,8 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>1OFFSET 和 LIMIT 有什么问题？</p>
-<p>首先OFFSET 和 LIMIT 对于数据量少的项目来说是没有问题的。</p>
-<p>但是，当数据库里的数据量超过服务器内存能够存储的能力，并且需要对所有数据进行分页，问题就会出现。</p>
-<p>为了实现分页，每次收到分页请求时，数据库都需要进行低效的全表扫描。</p>
-<p>什么是全表扫描？全表扫描 (又称顺序扫描) 就是在数据库中进行逐行扫描，顺序读取表中的每一行记录，然后检查各个列是否符合查询条件。这种扫描是已知最慢的，因为需要进行大量的磁盘 I/O，而且从磁盘到内存的传输开销也很大。<br>这意味着，如果你有 1 亿个用户，OFFSET 是 5 千万，那么它需要获取所有这些记录 (包括那么多根本不需要的数据)，将它们放入内存，然后获取 LIMIT 指定的 20 条结果。</p>
-<p>也就是说，为了获取一页的数据：<br>现在你应该知道这背后都发生了什么：OFFSET 越高，查询时间就越长。</p>
-<p><strong>你应该这样做：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table <span class="built_in">where</span> id&gt;20 <span class="built_in">limit</span> 20</span><br></pre></td></tr></table></figure>
-<p>这是一种基于指针的分页。</p>
-<p>你要在本地保存上一次接收到的主键 (通常是一个 ID) 和 LIMIT，而不是 OFFSET 和 LIMIT，那么每一次的查询可能都与此类似。</p>
-<p>为什么？因为通过显式告知数据库最新行，数据库就确切地知道从哪里开始搜索（基于有效的索引），而不需要考虑目标范围之外的记录。</p>
-<p>比较这个查询：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table <span class="built_in">limit</span> 10 offset 500000</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table <span class="built_in">where</span> id&gt;500000 <span class="built_in">limit</span> 10</span><br></pre></td></tr></table></figure>
-
-<p>返回同样的结果，第一个查询使用了 12.80 秒，而第二个仅用了 0.01 秒。</p>
-<p>要使用这种基于游标的分页，需要有一个惟一的序列字段 (或多个)，比如惟一的整数 ID 或时间戳，但在某些特定情况下可能无法满足这个条件。<br>如果需要基于大量数据做查询操作，Rick James 的文章提供了更深入的指导。<br><a target="_blank" rel="noopener" href="http://mysql.rjweb.org/doc.php/lists">http://mysql.rjweb.org/doc.php/lists</a><br>如果我们的表没有主键，比如是具有多对多关系的表，那么就使用传统的 OFFSET/LIMIT 方式，只是这样做存在潜在的慢查询问题。我建议在需要分页的表中使用自动递增的主键，即使只是为了分页。</p>
+          <h2 id="传教士体位"><a href="#传教士体位" class="headerlink" title="传教士体位"></a>传教士体位</h2><p>教会认为夫妻之间的性行为应该纯粹为了生育后代而进行，任何建立在欢愉和欲望基础上的性行为都应该被唾弃，“一个男人过于热情地爱他的妻子则是通奸者”，“一个男人若只为享乐而与妻子上床，则对她如同妓女。”</p>
+<p>教会还提供了性行为的指导手册：夫妻之间要做好生理上和精神上的准备，排空膀胱，清理肠胃，丈夫要做好足够的前戏，抚摩妻子的“下部”使其发热，当妻子开始“说话好像在胡言乱语”时，丈夫便知道可以采取行动。<br><img src="https://img-blog.csdnimg.cn/img_convert/43900609f0b80a2065c346ec9b1832a1.png#pic_center" alt="在这里插入图片描述"></p>
 
         </div>
       </div>
