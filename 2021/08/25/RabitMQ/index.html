@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="钟逸">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="巅峰产生虚假的拥护，黄昏见证虔诚的信徒！RabbitMQ！"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Zyy@0822"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://example.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Zyy@0822" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Zyy@0822</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-light.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">巅峰产生虚假的拥护，黄昏见证虔诚的信徒！RabbitMQ！</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a target="_blank" rel="noopener" href="https://github.com/zyy0822">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:674198412@qq.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By 钟逸</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-08-25</span>
+            <span class="time">13:56:53</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>RabbitMQ是一个由erlang开发的AMQP(Advanved Message Queue)的开源实现。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>用户注册后，需要发注册邮件和注册短信,传统的做法有两种1.串行的方式;2.并行的方式</p>
+<h3 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h3><p>将注册信息写入数据库后,发送注册邮件,再发送注册短信,以上三个任务全部完成后才返回给客户端。 这有一个问题是,邮件,短信并不是必须的,它只是一个通知,而这种做法让客户端等待没有必要等待的东西.<br><img src="https://img-blog.csdnimg.cn/f3ea37e1e4564f93b2166f04f2c04131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_41,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>将注册信息写入数据库后,发送邮件的同时,发送短信,以上三个任务完成后,返回给客户端,并行的方式能提高处理的时间。<br><img src="https://img-blog.csdnimg.cn/ae9d94af5dc6479aa8760e8360c3ca7e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_37,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>假设三个业务节点分别使用50ms,串行方式使用时间150ms,并行使用时间100ms。虽然并性已经提高的处理时间,但是,前面说过,邮件和短信对我正常的使用网站没有任何影响，客户端没有必要等着其发送完成才显示注册成功,因为是写入数据库后就返回.</p>
+<h3 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h3><p>把发送邮件,短信不是必须的业务逻辑异步处理<br><img src="https://img-blog.csdnimg.cn/34a2727573c74c31a314cf105821d9b5.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_41,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>由此可以看出,引入消息队列后，用户的响应时间就等于写入数据库的时间+写入消息队列的时间(可以忽略不计),引入消息队列后处理后,响应时间是串行的3倍,是并行的2倍。</p>
+<h2 id="应用解耦"><a href="#应用解耦" class="headerlink" title="应用解耦"></a>应用解耦</h2><p>场景：双11是购物狂节,用户下单后,订单系统需要通知库存系统,传统的做法就是订单系统调用库存系统的接口.<br>这种做法有一个缺点:<br>当库存系统出现故障时,订单就会失败。<br>订单系统和库存系统高耦合.<br>引入消息队列<br><img src="https://img-blog.csdnimg.cn/7af1c27ed7244fe3874aaa2ad7f322bf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_30,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p><img src="https://img-blog.csdnimg.cn/0ac77e9aa84444d0a10ae5a73fb8edac.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_32,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>几个概念说明:<br>Broker:它提供一种传输服务,它的角色就是维护一条从生产者到消费者的路线，保证数据能按照指定的方式进行传输,<br>Exchange：消息交换机,它指定消息按什么规则,路由到哪个队列。<br>Queue:消息的载体,每个消息都会被投到一个或多个队列。<br>Binding:绑定，它的作用就是把exchange和queue按照路由规则绑定起来.<br>Routing Key:路由关键字,exchange根据这个关键字进行消息投递。<br>vhost:虚拟主机,一个broker里可以有多个vhost，用作不同用户的权限分离。<br>Producer:消息生产者,就是投递消息的程序.<br>Consumer:消息消费者,就是接受消息的程序.<br>Channel:消息通道,在客户端的每个连接里,可建立多个channel.</p>
+<h2 id="任务分发机制"><a href="#任务分发机制" class="headerlink" title="任务分发机制"></a>任务分发机制</h2><h3 id="Round-robin-dispathching循环分发"><a href="#Round-robin-dispathching循环分发" class="headerlink" title="Round-robin dispathching循环分发"></a>Round-robin dispathching循环分发</h3><p>RabbbitMQ的分发机制非常适合扩展,而且它是专门为并发程序设计的,如果现在load加重,那么只需要创建更多的Consumer来进行任务处理。</p>
+<h3 id="Message-acknowledgment消息确认"><a href="#Message-acknowledgment消息确认" class="headerlink" title="Message acknowledgment消息确认"></a>Message acknowledgment消息确认</h3><p>为了保证数据不被丢失,RabbitMQ支持消息确认机制,为了保证数据能被正确处理而不仅仅是被Consumer收到,那么我们不能采用no-ack，而应该是在处理完数据之后发送ack.<br>在处理完数据之后发送ack,就是告诉RabbitMQ数据已经被接收,处理完成,RabbitMQ可以安全的删除它了.<br>如果Consumer退出了但是没有发送ack,那么RabbitMQ就会把这个Message发送到下一个Consumer，这样就保证在Consumer异常退出情况下数据也不会丢失.<br>RabbitMQ它没有用到超时机制.RabbitMQ仅仅通过Consumer的连接中断来确认该Message并没有正确处理，也就是说RabbitMQ给了Consumer足够长的时间做数据处理。<br>如果忘记ack,那么当Consumer退出时,Mesage会重新分发,然后RabbitMQ会占用越来越多的内存.</p>
+<h3 id="Mesage-Durable-消息的持久化"><a href="#Mesage-Durable-消息的持久化" class="headerlink" title="Mesage Durable 消息的持久化"></a>Mesage Durable 消息的持久化</h3><p>要持久化队列queue的持久化需要在声明时指定durable=True;<br>这里要注意,队列的名字一定要是Broker中不存在的,不然不能改变此队列的任何属性.<br>队列和交换机有一个创建时候指定的标志durable,durable的唯一含义就是具有这个标志的队列和交换机会在重启之后重新建立,它不表示说在队列中的消息会在重启后恢复<br>消息持久化包括3部分<br>1.exchange持久化,在声明时指定durable =&gt; true<br>2.queue持久化<br>3.消息持久化<br>如果exchange和queue都是持久化的,那么它们之间的binding也是持久化的,如果exchange和queue两者之间有一个持久化，一个非持久化,则不允许建立绑定.<br><strong>注意</strong>：一旦创建了队列和交换机,就不能修改其标志了,例如,创建了一个non-durable的队列,然后想把它改变成durable的,唯一的办法就是删除这个队列然后重现创建。</p>
+<h3 id="Fair-dispath-公平分发"><a href="#Fair-dispath-公平分发" class="headerlink" title="Fair dispath 公平分发"></a>Fair dispath 公平分发</h3><p>你可能也注意到了,分发机制不是那么优雅,默认状态下,RabbitMQ将第n个Message分发给第n个Consumer。n是取余后的,它不管Consumer是否还有unacked Message，只是按照这个默认的机制进行分发.<br>那么如果有个Consumer工作比较重,那么就会导致有的Consumer基本没事可做,有的Consumer却毫无休息的机会,那么,Rabbit是如何处理这种问题呢?<br>通过basic.qos方法设置prefetch_count=1，这样RabbitMQ就会使得每个Consumer在同一个时间点最多处理一个Message，换句话说,在接收到该Consumer的ack前,它不会将新的Message分发给它<br><strong>注意，这种方法可能会导致queue满。当然，这种情况下你可能需要添加更多的Consumer，或者创建更多的virtualHost来细化你的设计。</strong></p>
+<h3 id="分发到多个consumer"><a href="#分发到多个consumer" class="headerlink" title="分发到多个consumer"></a>分发到多个consumer</h3><p>Bindings 绑定：<br>绑定其实就是关联了exchange和queue，或者这么说:queue对exchange的内容感兴趣,exchange要把它的Message deliver到queue。<br>Direct exchange：<br><img src="https://img-blog.csdnimg.cn/93cb8328e4a94dbbb6e268e459861427.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_30,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>Exchange和两个队列绑定在一起,Q1的bindingkey是orange，Q2的binding key是black和green.<br>当Producer publish key是orange时,exchange会把它放到Q1上,如果是black或green就会到Q2上,其余的Message被丢弃.<br>Multiple bindings：<br>多个queue绑定同一个key也是可以的,对于下图的例子,Q1和Q2都绑定了black,对于routing key是black的Message，会被deliver到Q1和Q2，其余的Message都会被丢弃.<br><img src="https://img-blog.csdnimg.cn/be2d77d0e1d64bb389caa62f7dce83e3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_31,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>Topic exchange：<br>对于Message的routing_key是有限制的，不能使任意的。格式是以点号“.”分割的字符表。比如：”stock.usd.nyse”, “nyse.vmw”, “quick.orange.rabbit”。你可以放任意的key在routing_key中，当然最长不能超过255 bytes。<br>对于routing_key，有两个特殊字符</p>
+<p>*(星号)代表任意一个单词<br>#(hash)0个或多个单词<br><img src="https://img-blog.csdnimg.cn/3c02d8aec49e430383f866695affb087.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_Q1NETiBA6ZKf6YC4MDgyMg==,size_31,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!-- 雪花特效 -->
+<script type="text/javascript" src="\js\snow.js"></script>
+<!--人体时钟背景透明-->
+<script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<!--提供位置-->
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5q6u8egdiph&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
