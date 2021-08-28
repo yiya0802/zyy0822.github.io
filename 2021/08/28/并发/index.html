@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="钟逸">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Zyy@0822"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Zyy@0822"/>
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://example.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Zyy@0822" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Zyy@0822</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.light.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-light.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Untitled Post</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a target="_blank" rel="noopener" href="https://github.com/zyy0822">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:674198412@qq.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By 钟逸</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2021-08-28</span>
+            <span class="time">15:43:01</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <hr>
+<h2 id="title-并发"><a href="#title-并发" class="headerlink" title="title:并发"></a>title:并发</h2><p>并发：<br>    使用线程池的好处：<br>      提高响应速度<br>      降低资源消耗<br>      提高线程的可管理性<br>   三个特性：<br>                 原子性（synchronized关键字保证了原子性），可见性（volatile 关键字可以保证共享变量的可见性，一个修改了另外一个也会修改），有序性（volatile 关键字可以禁止指令进行重排序优化）</p>
+<pre><code>Executor 框架：
+  框架结构：
+  1.任务（Runnable、callable）
+  2.任务的执行（executor）
+  ScheduledThreadPoolExecutor 实际上是继承了 ThreadPoolExecutor（最重要的） 并实现了 ScheduledExecutorService ，而 ScheduledExecutorService 又实现了 ExecutorService
+  3.异步计算的结果
+  Future 接口以及 Future 接口的实现类 FutureTask 类都可以代表异步计算的结果。
+  主线程首先要创建实现 Runnable 或者 Callable 接口的任务对象。
+  把创建完成的实现 Runnable/Callable接口的 对象直接交给 ExecutorService 执行: ExecutorService.execute（Runnable command））或者也可以把 Runnable 对象或Callable 对象提交给 ExecutorService 执行（ExecutorService.submit（Runnable task）或 ExecutorService.submit（Callable &lt;T&gt; task））。
+  如果执行 ExecutorService.submit（…），ExecutorService 将返回一个实现Future接口的对象（我们刚刚也提到过了执行 execute()方法和 submit()方法的区别，submit()会返回一个 FutureTask 对象）。由于 FutureTask 实现了 Runnable，我们也可以创建 FutureTask，然后直接交给 ExecutorService 执行。
+  最后，主线程可以执行 FutureTask.get()方法来等待任务执行完成。主线程也可以执行 FutureTask.cancel（boolean mayInterruptIfRunning）来取消此任务的执行。
+</code></pre>
+<p>多个线程共享进程的方法区和堆，每个线程拥有自己的程序计数器，本地方法栈，虚拟机栈<br>进程之间是独立的，而线程之间不一定，同一进程的线程之间极其容易相互影响<br>程序计数器：多线程中记录当前线程执行的位置，从而在线程切换的时候可以知道运行到哪了。<br>读取相关指令，实现代码的控制<br>虚拟机栈：每个java方法在创建的时候会创建一个栈帧来创建局部变量表，操作数栈，常量池引用。<br>本地方法栈：虚拟机栈执行java方法，本地方法栈执行native方法<br>为了保证局部变量不被别的线程访问到，所以必须是私有的</p>
+<p>多线程可能会带来内存泄漏、死锁、线程不安全的问题</p>
+<p>线程的生命周期和状态：<br>new，runnable，waiting，ready，blocking，terminal</p>
+<p>什么是上下文切换：<br>当出现以下条件的情况下，线程会从占有cpu中退出：<br>调用sleep（），wait（）方法 区别:sleep方法是静态方法不能释放锁，其他线程不能访问这个对象，而wait方法释放了锁，可以通过notify，notifyAll方法来唤醒等待的线程<br>时间片用完<br>调用了阻塞类型的系统中断<br>被终止或结束运行<br>线程切换都要保存切换的位置，以便于下次占有cpu时，恢复现场</p>
+<p>synchronized:<br>解决多个线程访问一个资源的同步性，可以保证他修饰的方法和代码块在一段时间只被一个线程执行<br>它可以修饰实例方法（给实例对象加锁），静态方法（给类对象加锁），代码块（给类或者实例加锁都行）<br>因为静态成员不属于任何一个实例对象，是类成员</p>
+<p>synchronized方法和 ReentrantLock 的区别<br>synchronized是依赖于jvm，ReentrantLock 依赖api的<br>ReentrantLock 可以使用lock.lockInterruptibly()来实现等待可中断<br>使用ReentrantLock(boolean fair)确定是否是公平锁<br>synchronized关键字与wait()和notify()/notifyAll()方法相结合可以实现等待/通知机制。ReentrantLock类当然也可以实现，但是需要借助于Condition接口与newCondition()方法。</p>
+<p>synchronized与volatile的区别<br>volatile轻量，synchronized重量，volatile只能用于变量，synchronized能用于变量和类<br>volatile关键字主要用于解决变量在多个线程之间的可见性，而 synchronized 关键字解决的是多个线程之间访问资源的同步性。</p>
+<p>cpu缓存模型<br>是为了解决内存与cpu处理速度不等的问题<br>CPU Cache 缓存的是内存数据用于解决 CPU 处理速度和内存不匹配的问题，内存缓存的是硬盘数据用于解决硬盘访问速度过慢的问题</p>
+<p>AQS原理分析：<br>AQS 核心思想是，如果被请求的共享资源空闲，则将当前请求资源的线程设置为有效的工作线程，并且将共享资源设置为锁定状态。<br>如果被请求的共享资源被占用，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制 AQS 是用 CLH 队列锁实现的，即将暂时获取不到锁的线程加入到队列中。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!-- 雪花特效 -->
+<script type="text/javascript" src="\js\snow.js"></script>
+<!--人体时钟背景透明-->
+<script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<!--提供位置-->
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5q6u8egdiph&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>

@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="钟逸">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="MYSQL"/>
+  <meta property="og:title" content="java基础和一些框架"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Zyy@0822"/>
   <meta property="og:type" content="article" />
@@ -47,7 +47,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">MYSQL</p>
+          <p class="title">java基础和一些框架</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -103,7 +103,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2021-07-25</span>
+            <span class="date">2021-08-28</span>
             <span class="time">15:43:01</span>
           </span>
           
@@ -112,19 +112,15 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>1.MySQL<br>sql,DB,DBMS分别是什么<br>  DB:<br>       DateBase(数据库，一般以文件的形式存在)</p>
-<p>   DBMS:<br>        DateBase Management System(数据库管理系统 常见的有：Mysql DB2 Sybase sqlServer…)<br>    SQL：<br>        结构化查询语句，是一种标准通用语句<br>        sql属于高级语言。只要看得懂英语单词的，写出来的sql语句，可以读懂什么意思<br>        sql语句再执行的时候，内部会进行编译，再执行sql（sql的编译有DBMS完成）</p>
-<p>DBMS负责执行sql语句，通过执行sql语句来操作DB中的数据<br>DBMS -执行-&gt; sql -&gt;操作 -&gt;DB</p>
-<p>2.1什么是表？<br>表：table</p>
-<p>表示数据库的基本组成单元，所有的数据以表的形式组</p>
-<p>织，目的性是可读性强</p>
-<p>一个表包括行和列<br>行：被称为数据/记录（data）<br>列：被称为字段（column）<br>2.1什么是表？<br>表：table</p>
-<p>表示数据库的基本组成单元，所有的数据以表的形式组</p>
-<p>织，目的性是可读性强</p>
-<p>一个表包括行和列<br>      行：被称为数据/记录（data）<br>      列：被称为字段（column）</p>
-<p>2.2每个字段（列）包括哪些属性？<br>字段名，数据类型，相关的约束</p>
-<p>|学号（int）| 姓名（carchar） |年龄（int）<br>|110            |张三                      |20<br>|120            |李四                     |21<br>行叫数据，列叫字段</p>
-<p>3.学习MySQL主要还是学习通用的SQL语句<br>DQL（数据查询语言）:查询语句，凡是select都是DQL。<br>DML（数据操作语言）:insert delete update 对<em>数据</em>进行增删改。<br>DDL（数据定义语言）:<em><strong>creat</strong></em> drop alter ， 对表的<em>结构</em>进行增删改。<br>TCL（<strong>事务控制语言</strong>）:commit 提交事务，rollback 回滚事务。<br>DCL（数据控制语言）:grant授权，revoke撤销权限等。</p>
+          <p>vo：展示的数据<br>po：持久对象，数据库的记录<br>bo：业务对象<br>dto：数据传输对象<br>LocalDateTime.now 当前时间<br>Transactional()<br>BeanUtils.copyProperties(a,b) a要多</p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/zhijiantianya/smart-admin">https://gitee.com/zhijiantianya/smart-admin</a></p>
+<p>hashset去重<br>hashmap 统计个数<br>接口和抽象类的区别</p>
+<p>RandomAccess接口：具有快速随机访问功能在arrayList中有实现<br>Deque接口：立即插入所在元素在linkedlist实现<br>ValidatorUtil：字段验证工具<br>数组转链表：asList 不能使用add方法<br>链表转数组:  toArray<br>map转spring：</p>
+<p>Object codeObj = redisTemplate.opsForValue().get(CommonConstants.DEFAULT_CODE_KEY + LoginTypeEnum.SMS.getType() + StringPool.AT + mobile);<br>获取key键对应的值。<br>Integer.parseInt<br>将String字符类型数据转换为Integer整型数据。<br>RandomUtil.randomNumbers(length) 随机整数</p>
+<p>ArrayList扩容机制<br>HashMap实现map接口默认初始2^4，load factory负载因子0.75，存键值对，扩容是变成两倍<br>HashSet底层是基于hashmap实现的实现set接口，仅存对象，去重用，不能重复<br>扰动函数：减少碰撞，先将hashcode值向由移动16位，然后与之进行异或<br>拉链法：创建一个链表数组，数组的每一格都是链表，遇到hash冲突，将值放进链表中<br>链表长度大于8，会自动转换为红黑树<br>ConcurrentHashMap：<br>hashmap键值允许为null，con不允许有null，更安全<br>1.7使用分段锁，1.8使用CAS+synchronized+Node+红黑树<br>Node是存储的基本单元继承map.entry<br>treenode用于红黑树存数据<br>TreeBin封装Treenode 提供转换为红黑树的条件<br>存对象：<br>没有初始化，调用inittable来初始化<br>没有hash冲突就CAS无锁插入<br>存在就先加锁，一种是链表遍历到尾插，另一种是红黑树插入<br>需要扩容先扩容<br>如果链表长度大于8，转换为红黑树</p>
+<p>java内存粗略分为栈内存stack，和堆内存heap<br>栈是由一个个栈帧组成的，每个栈帧都拥有局部变量表、操作数栈、动态链接、方法出口信息。<br>虚拟机栈为虚拟机执行java方法，本地方法栈为本地方法native服务都会出现stackoverflow和outofmemoryerror</p>
+<p>redis：高性能，直接从内存获取，高并发QPS达到10w，30w</p>
+<p>ioC：inversion of control ioC容器是spring用来实现ioC的载体-实际是个map，存放各种对象。轮胎-底盘-车身-车<br>AOP: 面向切面编程 ，用于将那些与业务无关，但却对多个对象产生影响的公共行为和逻辑，抽取并封装为一个可重用的模块<br>减少代码重复，降低耦合度，可维护<br>动态代理，JDK动态代理和CGLIB动态代理 jdk是实现了接口的对象，cglib是没有实现接口的对象<br>Bean的生命周期<br>@Transient不被实例化<br>工厂模式：beanfactory和applicationcontext<br>代理模式 springAOP<br>单例模式：bean都是单例的<br>模板模式：redistemplate hibernatetemplate<br>适配器模式 Adapt模式 两个接口不兼容，不能一起工作<br>springMVC:<br>客户端（浏览器）发送请求，直接请求到 DispatcherServlet。<br>DispatcherServlet 根据请求信息调用 HandlerMapping，解析请求对应的 Handler。<br>解析到对应的 Handler（也就是我们平常说的 Controller 控制器）后，开始由 HandlerAdapter 适配器处理。<br>HandlerAdapter 会根据 Handler来调用真正的处理器开处理请求，并处理相应的业务逻辑。<br>处理器处理完业务后，会返回一个 ModelAndView 对象，Model 是返回的数据对象，View 是个逻辑上的 View。<br>ViewResolver 会根据逻辑 View 查找实际的 View。<br>DispaterServlet 把返回的 Model 传给 View（视图渲染）。<br>把 View 返回给请求者（浏览器）</p>
 
         </div>
       </div>
